@@ -10,11 +10,10 @@ scp_copy:
         SERVER_USERNAME: "jpo"
         SERVER_PATH: "/home/jpo/names/names"
     script:
-        - apt update && apt install openssh-client
+        - apt update -y && apt install -y openssh-client
         - echo "$SSH_PRIVATE_KEY" | base64 -d > ./id_rsa
         - chmod 600 ./id_rsa
         - |
           NAME=$(sed -n -e 's/<!-- Name: \([-_0-9a-zA-Zéè]*\).* -->/\1/p' index.html)
         - mv index.html $NAME.html 
-
         - scp -i ./id_rsa -o StrictHostKeyChecking=no $NAME.html ${SERVER_USERNAME}@${SERVER_IP}:$SERVER_PATH
