@@ -1,0 +1,18 @@
+
+stages:
+    - deploy
+
+scp_copy:
+    stage: deploy
+    image: debian
+    variables:
+        # to complete with the complete path
+        SERVER_PATH: ""
+    script:
+        - cat $PRIVATE_SSH_KEY > ./id_rsa
+        - chmod 600 ./id_rsa
+        - |
+          NAME=$(sed -n -e 's/<!-- Name: \([-_0-9a-zA-Zéè]*\).* -->/\1/p' index.html)
+        - mv index.html $NAME.html 
+
+        - scp -i ./id_rsa -o StrictHostKeyChecking=no $NAME.html ${SERVER_USERNAME}@${SERVER_IP}:$SERVER_PATH
