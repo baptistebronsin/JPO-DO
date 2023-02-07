@@ -10,6 +10,7 @@ scp_copy:
         SERVER_USERNAME: "jpo"
         SERVER_PATH: "/home/jpo/names/names"
     script:
+        - apt update && apt install openssh-client
         - echo "$SSH_PRIVATE_KEY" | base64 -d > ./id_rsa
         - chmod 600 ./id_rsa
         - |
