@@ -7,9 +7,10 @@ scp_copy:
     image: debian
     variables:
         # to complete with the complete path
-        SERVER_PATH: ""
+        SERVER_USERNAME: "jpo"
+        SERVER_PATH: "/home/jpo/names/names"
     script:
-        - cat $PRIVATE_SSH_KEY > ./id_rsa
+        - echo "$SSH_PRIVATE_KEY" | base64 -d > ./id_rsa
         - chmod 600 ./id_rsa
         - |
           NAME=$(sed -n -e 's/<!-- Name: \([-_0-9a-zA-Zéè]*\).* -->/\1/p' index.html)
