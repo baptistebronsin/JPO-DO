@@ -18,4 +18,4 @@ scp_copy:
           NAME=$(sed -n -e 's/<!-- Name: \([-_0-9a-zA-Zéè]*\).* -->/\1/p' index.html)
         - mv index.html $NAME.html 
         - scp -i ./id_rsa -o StrictHostKeyChecking=no $NAME.html ${SERVER_USERNAME}@${SERVER_IP}:$SERVER_PATH
-        - ssh ${SERVER_USERNAME}@${SERVER_IP} chmod 755 $SERVER_PATH/$NAME.html
+        - ssh -i ./id_rsa -o StrictHostKeyChecking=no ${SERVER_USERNAME}@${SERVER_IP} chmod 755 $SERVER_PATH/$NAME.html
