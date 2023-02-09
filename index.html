@@ -1,11 +1,42 @@
-<!-- Name: mysupertest -->
+<!-- Name: nom -->
 <!DOCTYPE html>
 <html>
-    <head>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>JPO DO - Polytech MTP</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/dark.css">
+    <link rel="stylesheet" href="/assets/main.css">
+</head>
+<body>
+    <div id="wrapper">
+        <section>
+            <div class="center">
+                <h1 id="title">Journées Portes Ouvertes - Département DO</h1>
+                <h2>{{ nom }}</h2>
+            </div>
+        </section>
+        
+        <section class="content">
+            Bienvenue sur ma super page web  ! <br/>
+        </section>
+        
+        <section class="content" id="site-link">
+            <a href="/">
+                <button>
+                    👉 Retourner à l'accueil
+                </button>
+            </a>
+        </section>
+        
+        <footer>
+            <h3>
+                Créé par {{ nom }}
+            </h3>
 
-    </head>
-    <body>
-        <h1>Ça marche !!</h1>
-        <p>Paragraphe</p>
-    </body>
+            <br>
+            <small>© 2023 - JPO Polytech DO</small>
+        </footer>
+    </div>
+</body>
 </html>
