@@ -6,7 +6,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>JPO DO - Polytech MTP</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/dark.css">
-    <link rel="stylesheet" href="/assets/main.css">
+    <style>
+        body {
+            min-height: 100vh;
+            display: flex;
+        }
+
+        #wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        main {
+            flex: 1;
+        }
+    </style>
 </head>
 
 <body>
@@ -17,9 +32,14 @@
             </div>
         </section>
 
-        <section class="content">
-            Bienvenue sur ma super page web ! <br />
-        </section>
+        <main class="content">
+            <section>
+                <h2>Merci aux participants 👏</h2>
+                <ul>
+                    <!-- <li>Test</li> -->
+                </ul>
+            </section>
+        </main>
 
         <footer>
             <small>©2024 - JPO Polytech DO</small>
