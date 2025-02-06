@@ -1,18 +1,58 @@
 stages:
-    - deploy
+  - build
+  - deploy
 
-scp_copy:
-    stage: deploy
-    image:
-        name: lgatica/openssh-client
-        entrypoint: [""]
-    # variables:
-    #     # to complete with the complete path
-    #     SERVER_USERNAME: "jpo"
-    #     SERVER_PATH: "/home/jpo/names/names"
-    script:
-        - cat $SSH_PRIVATE_KEY | base64 -d > ./id_rsa
-        - chmod 400 ./id_rsa
-        - mv index.html index.nginx-debian.html
-        - scp -i ./id_rsa -o StrictHostKeyChecking=no index.nginx-debian.html ${SERVER_USERNAME}@${SERVER_IP}:$SERVER_PATH
-        - ssh -i ./id_rsa -o StrictHostKeyChecking=no ${SERVER_USERNAME}@${SERVER_IP} chmod 755 $SERVER_PATH/index.nginx-debian.html
+build:
+  image: docker:20.10.7
+  services:
+    - docker:20.10.7-dind
+  stage: build
+  before_script:
+    - echo $CI_JOB_TOKEN | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
+  script:
+    - IMAGE_TAG="main-infra-$CI_COMMIT_SHORT_SHA"
+    - echo "Building image with tag $IMAGE_TAG"
+    - docker build -t $CI_REGISTRY_IMAGE:$IMAGE_TAG .
+    - docker push $CI_REGISTRY_IMAGE:$IMAGE_TAG
+  after_script:
+    - docker logout $CI_REGISTRY
+    - docker image prune -f
+  only:
+    - main
+
+update_manifest:
+  stage: deploy
+  image: alpine:latest
+  script:
+    - apk add --no-cache git
+    - git config user.email "contact@baptistebronsin.be"
+    - git config user.name "JPO CI"
+    - git remote set-url origin https://oauth2:${GITLAB_PAT}@gitlab.polytech.umontpellier.fr:jpo-do/template.git
+    - git fetch origin $CI_COMMIT_REF_NAME
+    - git checkout -b main-infra origin/main-infra
+    - |
+      HELM_VALUES_FILE="helm/values.yaml"
+      IMAGE_TAG="main-infra-$CI_COMMIT_SHORT_SHA"
+      echo "IMAGE_TAG: $IMAGE_TAG"
+      sed -i "s/jpo-do/template:.*/jpo-do/template:$IMAGE_TAG/" $HELM_VALUES_FILE
+    - git add $HELM_VALUES_FILE
+    - git commit -m "Update image tag to $IMAGE_TAG [skip ci]"
+    - git push origin main-infra
+  only:
+    - main
+  dependencies:
+    - build
+
+call_deploy:
+  stage: deploy
+  image: alpine/curl:latest
+  script:
+    - apk add --no-cache curl
+    - curl -sSL -o argocd https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
+    - chmod +x argocd
+    - ./argocd login $STAGING_ARGOCD_SERVER --username $STAGING_ARGOCD_USERNAME --password $STAGING_ARGOCD_PASSWORD --insecure
+    - ./argocd app sync jpo-front
+  only:
+    - main
+  dependencies:
+    - update_manifest

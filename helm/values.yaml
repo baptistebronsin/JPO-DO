@@ -1,0 +1,22 @@
+namespace: jpo
+
+front:
+  name: front-web
+  replicaCount: 1
+  port: 80
+
+  servicePort: 80
+  containerPort: 80
+
+  image: gitlab.polytech.umontpellier.fr:5050/jpo-do/template:latest
+
+  ingress:
+    enabled: true
+    annotations:
+      spec.ingressClassName: traefik
+      cert-manager.io/cluster-issuer: letsencrypt-baptiste
+      traefik.ingress.kubernetes.io/router.middlewares: default-redirect-https@kubernetescrd
+    hosts: "jpo.baptistebronsin.be"
+    tls: true
+    tlsSecret: "front-tls"
+

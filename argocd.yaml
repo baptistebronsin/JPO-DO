@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: jpo-front
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://gitlab.com/plannify-group/plannify-front-web-user.git
+    targetRevision: main-infra
+    path: helm
+    helm:
+      valueFiles:
+        - values.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: jpo
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
