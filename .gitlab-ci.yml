@@ -18,7 +18,7 @@ build:
     - docker logout $CI_REGISTRY
     - docker image prune -f
   only:
-    - main
+    - *
 
 update_manifest:
   stage: deploy
@@ -39,7 +39,7 @@ update_manifest:
     - git commit -m "Update image tag to $IMAGE_TAG [skip ci]"
     - git push origin main-infra
   only:
-    - main
+    - *
   dependencies:
     - build
 
@@ -53,6 +53,6 @@ call_deploy:
     - ./argocd login $STAGING_ARGOCD_SERVER --username $STAGING_ARGOCD_USERNAME --password $STAGING_ARGOCD_PASSWORD --insecure
     - ./argocd app sync jpo-front
   only:
-    - main
+    - *
   dependencies:
     - update_manifest
