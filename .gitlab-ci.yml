@@ -17,6 +17,8 @@ build:
   after_script:
     - docker logout $CI_REGISTRY
     - docker image prune -f
+  only:
+    - main
 
 update_manifest:
   stage: deploy
@@ -38,6 +40,8 @@ update_manifest:
     - git push origin main-infra
   dependencies:
     - build
+  only:
+    - main
 
 call_deploy:
   stage: deploy
@@ -50,3 +54,5 @@ call_deploy:
     - ./argocd app sync jpo-front
   dependencies:
     - update_manifest
+  only:
+    - main
