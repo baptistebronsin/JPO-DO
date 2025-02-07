@@ -28,7 +28,7 @@ update_manifest:
     - git config user.email "contact@baptistebronsin.be"
     - git config user.name "JPO CI"
     - git remote set-url origin https://oauth2:${GITLAB_PAT}@gitlab.com/baptiste.bronsin/jpo-do.git
-    - git fetch origin $CI_COMMIT_REF_NAME
+    - git fetch origin
     - git checkout main-infra
     - |
       HELM_VALUES_FILE="helm/values.yaml"
