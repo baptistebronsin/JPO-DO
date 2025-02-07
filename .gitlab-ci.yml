@@ -25,14 +25,14 @@ update_manifest:
     - apk add --no-cache git
     - git config user.email "contact@baptistebronsin.be"
     - git config user.name "JPO CI"
-    - git remote set-url origin https://oauth2:${GITLAB_PAT}@gitlab.polytech.umontpellier.fr:jpo-do/template.git
+    - git remote set-url origin https://oauth2:${GITLAB_PAT}@gitlab.com:baptiste.bronsin/jpo-do.git
     - git fetch origin $CI_COMMIT_REF_NAME
     - git checkout -b main-infra origin/main-infra
     - |
       HELM_VALUES_FILE="helm/values.yaml"
       IMAGE_TAG="main-infra-$CI_COMMIT_SHORT_SHA"
       echo "IMAGE_TAG: $IMAGE_TAG"
-      sed -i "s/jpo-do/template:.*/jpo-do/template:$IMAGE_TAG/" $HELM_VALUES_FILE
+      sed -i "s/jpo-do:.*/jpo-do:$IMAGE_TAG/" $HELM_VALUES_FILE
     - git add $HELM_VALUES_FILE
     - git commit -m "Update image tag to $IMAGE_TAG [skip ci]"
     - git push origin main-infra
@@ -46,7 +46,7 @@ call_deploy:
     - apk add --no-cache curl
     - curl -sSL -o argocd https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
     - chmod +x argocd
-    - ./argocd login $STAGING_ARGOCD_SERVER --username $STAGING_ARGOCD_USERNAME --password $STAGING_ARGOCD_PASSWORD --insecure
+    - ./argocd login $ARGOCD_SERVER --username $ARGOCD_USERNAME --password $ARGOCD_PASSWORD --insecure
     - ./argocd app sync jpo-front
   dependencies:
     - update_manifest
