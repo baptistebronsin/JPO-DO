@@ -30,7 +30,7 @@ const Card: React.FC<CardProps> = ({ firstName, characterId }) => {
     }, [characterId]);
 
     return (
-        <div className="flex flex-col gap-4 px-3 py-3 rounded-sm bg-white w-[350px]" style={error ? { border: '1px solid red' } : {}}>
+        <div className="flex flex-col gap-4 px-3 py-3 rounded-sm bg-white w-full" style={error ? { border: '1px solid red' } : {}}>
             <p><span className="text-[#821980]">{ formatName(firstName) }</span> a choisi :</p>
             {
                 character ? (
