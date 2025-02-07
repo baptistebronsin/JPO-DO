@@ -1,4 +1,4 @@
-import { Activity, Contacts, Footer, WebSiteUrl } from "./feature";
+import { Activity, Contacts, Footer, WebSiteUrl } from "../feature";
 
 const App: React.FC = () => {
 
