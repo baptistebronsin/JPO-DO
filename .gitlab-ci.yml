@@ -29,7 +29,7 @@ update_manifest:
     - git config user.name "JPO CI"
     - git remote set-url origin https://oauth2:${GITLAB_PAT}@gitlab.com/baptiste.bronsin/jpo-do.git
     - git fetch origin $CI_COMMIT_REF_NAME
-    - git checkout -b main-infra origin/main-infra
+    - git checkout main-infra
     - |
       HELM_VALUES_FILE="helm/values.yaml"
       IMAGE_TAG="main-infra-$CI_COMMIT_SHORT_SHA"
