@@ -19,9 +19,9 @@ const Contact: React.FC<ContactProps> = ({ fullName, catchPhrase, image, linkedI
                     <p className="text-[#821980] text-lg">{ fullName }</p>
                     <p>{ catchPhrase }</p>
                 </div>
-                <div className="flex flex-row gap-2">
-                    <Linkedin />
-                    <a href={ linkedIn } rel={`Lien LinkedIn vers le profil de ${fullName}`} target="_blank">{ linkedIn }</a>
+                <div className="flex flex-row items-center gap-2">
+                    <Linkedin color="#0a66c2" />
+                    <a href={ linkedIn } rel={`Lien LinkedIn vers le profil de ${fullName}`} target="_blank" className="text-[#4169E1]">Mon profil LinkedIn</a>
                 </div>
             </div>
         </div>
