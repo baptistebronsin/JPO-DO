@@ -8,7 +8,7 @@ front:
   servicePort: 80
   containerPort: 80
 
-  image: registry.gitlab.com/baptiste.bronsin/jpo-do:main-infra-55db5781
+  image: registry.gitlab.com/baptiste.bronsin/jpo-do:main-infra-c9b6ffe6
 
   ingress:
     enabled: true
