@@ -12,6 +12,7 @@ const Cards: React.FC = () => {
             <Card firstName="Dorian R" characterId={177} />
             <Card firstName="Margot B" characterId={42} />
             <Card firstName="Zoé T" characterId={47} />
+            <Card firstName="Rafael R" characterId={8} />        
         </div>
     )
 }
