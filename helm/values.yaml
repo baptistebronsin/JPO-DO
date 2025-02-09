@@ -8,7 +8,7 @@ front:
   servicePort: 80
   containerPort: 80
 
-  image: registry.gitlab.com/baptiste.bronsin/jpo-do:main-infra-23246f46
+  image: registry.gitlab.com/baptiste.bronsin/jpo-do:main-infra-13c4ab6a
 
   ingress:
     enabled: true
@@ -19,4 +19,3 @@ front:
     hosts: "jpo.baptistebronsin.be"
     tls: true
     tlsSecret: "front-tls"
-
