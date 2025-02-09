@@ -4,7 +4,7 @@ import { Character } from "../models/character.model";
 import { getCharacterById } from "../api/get_character.api";
 
 interface CardProps {
-    firstName: string;
+    firstName: string | undefined;
     characterId: number;
 }
 
@@ -30,12 +30,14 @@ const Card: React.FC<CardProps> = ({ firstName, characterId }) => {
     }, [characterId]);
 
     return (
-        <div className="flex flex-col gap-4 px-3 py-3 rounded-sm bg-white w-[350px]" style={error ? { border: '1px solid red' } : {}}>
-            <p><span className="text-[#821980]">{ formatName(firstName) }</span> a choisi :</p>
+        <div className="flex flex-col gap-4 px-3 py-3 rounded-sm bg-white w-full">
+            {
+                firstName ? <p><span className="text-[#821980]">{ formatName(firstName) }</span> a choisi :</p> : <p><span className="text-[#9FA5AD]">Identifiant :</span>&nbsp;{ characterId }</p>
+            }
             {
                 character ? (
                     <div className="flex flex-row gap-4">
-                        <img rel={`Personnage de Rick et Morty numéro ${characterId}`} src={ character.image } className="w-[100px] h-[100px] rounded-sm object-cover" />
+                        <img rel={`Personnage de Rick et Morty numéro ${characterId}`} src={ character.image } loading="lazy" className="w-[100px] h-[100px] rounded-sm object-cover" />
                         <div className="flex flex-col justify-between">
                             <p>{ character.name }</p>
                             <div className="flex flex-col">

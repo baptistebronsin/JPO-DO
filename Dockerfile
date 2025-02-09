@@ -20,10 +20,14 @@ COPY . .
 RUN pnpm run build
 
 # ---- Étape finale : sert les fichiers statiques avec Nginx ----
-FROM nginx:stable-alpine
+FROM nginxinc/nginx-unprivileged:alpine3.18
+
+# Nettoyage du répertoire par défaut de nginx
+RUN rm -rf /etc/nginx/html/*
 
 # Copie du bundle depuis l'étape builder vers le dossier statique de Nginx
-COPY --from=builder /app/dist /usr/share/nginx/html
+COPY --from=builder --chown=nginx:nginx /app/dist /etc/nginx/html
+COPY --chown=nginx:nginx nginx.conf /etc/nginx/nginx.conf
 
 # Exposition du port 80
 EXPOSE 80

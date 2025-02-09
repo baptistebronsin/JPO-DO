@@ -19,4 +19,3 @@ front:
     hosts: "jpo.baptistebronsin.be"
     tls: true
     tlsSecret: "front-tls"
-
