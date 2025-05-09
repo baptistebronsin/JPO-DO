@@ -13,9 +13,9 @@ front:
   ingress:
     enabled: true
     annotations:
-      spec.ingressClassName: traefik
-      cert-manager.io/cluster-issuer: letsencrypt-baptiste
-      traefik.ingress.kubernetes.io/router.middlewares: default-redirect-https@kubernetescrd
+      spec.ingressClassName: nginx
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+      nginx.ingress.kubernetes.io/ssl-redirect: "true"
     hosts: "jpo.baptistebronsin.be"
     tls: true
     tlsSecret: "front-tls"
