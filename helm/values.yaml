@@ -1,4 +1,4 @@
-namespace: jpo
+namespace: baptiste-jpo
 
 front:
   name: front-web
