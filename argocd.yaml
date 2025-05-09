@@ -4,7 +4,7 @@ metadata:
   name: jpo-front
   namespace: argocd
 spec:
-  project: baptiste-jpo
+  project: default
   source:
     repoURL: https://gitlab.com/baptiste.bronsin/jpo-do.git
     targetRevision: main-infra
